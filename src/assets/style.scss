@@ -1,0 +1,156 @@
+@charset "utf-8";
+@import "./bulma/bulma";
+
+
+body:not(body.dark) {
+  background-color: $light;
+  transition: all 0.4s ease;
+  min-height:100vh !important;
+  overflow: visible;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Some styling
+
+body .subtitle,
+body .title {
+  color: $dark;
+}
+
+body.dark {
+  background-color: $dark;
+  color: $light;
+  min-height:100vh !important;
+  overflow: visible;
+}
+
+body.dark .subtitle,
+body.dark .title {
+  color: $light;
+}
+
+.help {
+
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+body.dark .section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.card {
+  background-color: $light;
+}
+
+body.dark .card {
+  background-color: findDarkColor(hsl(0, 0%, 29%));
+}
+
+nav, .hero .navbar {
+  background-color:#dbdbdb;
+}
+
+body.dark nav, body.dark .hero .navbar  {
+  background-color:#444444;
+}
+
+.navbar.is-white {
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 4%);
+}
+.navbar.is-white .navbar-brand > .navbar-item,
+.navbar.is-white .navbar-brand .navbar-link {
+  color: hsl(0, 0%, 4%);
+}
+body.dark .navbar.is-white .navbar-brand > a.navbar-item:focus,
+body.dark .navbar.is-white .navbar-brand > a.navbar-item:hover,
+body.dark .navbar.is-white .navbar-brand > a.navbar-item.is-active,
+body.dark .navbar.is-white .navbar-brand .navbar-link:focus,
+body.dark .navbar.is-white .navbar-brand .navbar-link:hover,
+body.dark .navbar.is-white .navbar-brand .navbar-link.is-active {
+  background-color: lighten(#444444, 5%) !important;
+}
+
+.who {
+  background-color: hsl(0, 0%, 85%);
+}
+
+body.dark .who {
+  background-color: hsl(0, 0%, 16%);
+}
+
+.force-full-size {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.dark p,
+body.dark ol,
+body.dark ul,
+body.dark li,
+body.dark dl,
+body.dark dt,
+body.dark dd,
+body.dark blockquote,
+body.dark figure,
+body.dark fieldset,
+body.dark legend,
+body.dark textarea,
+body.dark pre,
+body.dark iframe,
+body.dark hr,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark th,
+body.dark h5,
+body.dark h6,
+body.dark label,
+body.dark strong,
+body.dark span, {
+  color: white;
+}
+
+body.dark table, body.dark tbody, body.dark th, body.dark tr {
+  background-color: findDarkColor(hsl(0, 0%, 100%));
+  color: white;
+  border-color: hsl(0%, 0%, 21%);
+}
+
+body.dark .select select::placeholder, body.dark .textarea::placeholder, body.dark .input::placeholder {
+  color: hsl(0,0, 95%);
+}
+
+body.dark footer {
+  background-color: findDarkColor(hsl(0, 0%, 90%));
+}
+
+body.dark .panel-heading {
+  background-color: findDarkColor(hsl(0, 0%, 93%));
+}
+
+body.dark .textarea, body.dark .input, body.dark select .select {
+  background-color: findDarkColor($light);
+  color: white;
+}
+
+body.dark a {
+  color: $link-dark
+}
