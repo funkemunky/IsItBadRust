@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 
 pub mod components;
+pub mod pages;
 
 use dioxus::prelude::*;
 use log::LevelFilter;
@@ -40,7 +41,7 @@ fn app(cx: Scope) -> Element {
         body {
             class: "{body_class}",
             components::navbar::NavBar {},
-            components::ipentry::IpEntry {}
+            pages::home::Home {}
         }
     })
 }
@@ -49,6 +50,12 @@ pub fn Styling(cx: Scope) -> Element {
     cx.render(rsx! {
         style {
             include_str!("./assets/style.css")
-         }
+         },
+        style {
+            include_str!("./assets/bulma/bulma-extensions.min.css")
+        },
+        script {
+            include_str!("./assets/bulma/bulma-extensions.min.js")
+        }
     })
 }

@@ -74,6 +74,7 @@ body.dark nav, body.dark .hero .navbar  {
   background-color: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 4%);
 }
+
 .navbar.is-white .navbar-brand > .navbar-item,
 .navbar.is-white .navbar-brand .navbar-link {
   color: hsl(0, 0%, 4%);
@@ -85,6 +86,12 @@ body.dark .navbar.is-white .navbar-brand .navbar-link:focus,
 body.dark .navbar.is-white .navbar-brand .navbar-link:hover,
 body.dark .navbar.is-white .navbar-brand .navbar-link.is-active {
   background-color: lighten(#444444, 5%) !important;
+}
+
+
+body.dark a.navbar-item:hover {
+  background-color: lighten(#444444, 20%) !important;
+  color: black !important;
 }
 
 .who {
@@ -107,6 +114,7 @@ body.dark li,
 body.dark dl,
 body.dark dt,
 body.dark dd,
+body.dark a.navbar-item,
 body.dark blockquote,
 body.dark figure,
 body.dark fieldset,
@@ -125,8 +133,9 @@ body.dark h6,
 body.dark label,
 body.dark strong,
 body.dark span, {
-  color: white;
+  color: white
 }
+
 
 body.dark table, body.dark tbody, body.dark th, body.dark tr {
   background-color: findDarkColor(hsl(0, 0%, 100%));
