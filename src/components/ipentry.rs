@@ -6,9 +6,15 @@ use log::info;
 
 pub struct EnteredIp(pub String);
 
-pub fn IpEntry(cx: Scope) -> Element {
-    let entered_ip_result = use_shared_state::<EnteredIp>(cx).unwrap();
+#[derive(Props)]
+pub struct IpEntryProps<'a>  {
+    #[props(default)]
+    on_input: EventHandler<'a, FormEvent>,
+    #[props(default)]
+    on_entered: EventHandler<'a, EnteredIp>
+}
 
+pub fn IpEntry<'a>(cx: Scope<'a, IpEntryProps<'a>>) -> Element {
     let current_entering = use_state(cx, || "".to_string());
 
     cx.render(rsx! {
@@ -16,10 +22,9 @@ pub fn IpEntry(cx: Scope) -> Element {
             input {
                 class: "input",
                 placeholder: "Enter an IP",
-                oninput: |event| {
-                    let entered = event.value.clone();
-                    info!("Entered ${entered}");
-                    current_entering.set(entered);
+                oninput: move |event| {
+                    current_entering.set(event.value.clone());
+                    cx.props.on_input.call(event);
                 }
             },
             Button {
@@ -28,8 +33,8 @@ pub fn IpEntry(cx: Scope) -> Element {
                 onclick: |_| {
                     let current_input = current_entering.get().clone();
 
-                    info!("Setting IP enter to ${current_input}");
-                    entered_ip_result.write().0 = current_input;
+                    info!("Setting IP enter to {current_input}");
+                    cx.props.on_entered.call(EnteredIp(current_input.clone()));
                     info!("Finished!");
                 }
             }

@@ -11,3 +11,7 @@ dioxus-web = "0.4.0"
 dioxus-bulma = {git = "https://github.com/funkemunky/dioxus-bulma.git", branch = "main"}
 dioxus-logger = "0.4.1"
 log = "0.4.20"
+serde = { version = "1.0.192", features = ["derive"] }
+serde_json = "1.0.108"
+gloo-net = {version = "0.4.0", features = ["http", "serde_json", "serde"]}
+url = "2.4.1"

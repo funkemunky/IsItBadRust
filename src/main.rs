@@ -2,12 +2,14 @@
 
 pub mod components;
 pub mod pages;
+pub mod utils;
 
 use dioxus::prelude::*;
 use log::LevelFilter;
 
+
 fn main() {
-     dioxus_logger::init(LevelFilter::Info).expect("failed to init logger");
+    dioxus_logger::init(LevelFilter::Info).expect("failed to init logger");
     dioxus_web::launch(app);
 }
 
