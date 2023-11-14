@@ -1,8 +1,10 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use crate::DarkMode;
+use dioxus_router::prelude::*;
+use crate::{DarkMode, Route};
 use log::info;
+
 
 pub fn NavBar(cx: Scope) -> Element {
     let dark_mode = use_shared_state::<DarkMode>(cx).unwrap();
@@ -14,8 +16,9 @@ pub fn NavBar(cx: Scope) -> Element {
             class: "navbar",
             div {
                 class: "navbar-menu",
-                a {
+                Link {
                     class: "navbar-item",
+                    to: Route::Home {},
                     "Home"
                 },
                 div {

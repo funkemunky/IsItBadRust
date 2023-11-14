@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 use gloo_net::http::Request;
 use log::{info};
+use serde_json::Value;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct KauriResponse {
@@ -26,8 +27,7 @@ pub struct KauriResponse {
     asn: String
 }
 
-pub async fn get_ip_info(ip: String) -> Result<KauriResponse, Box<dyn Error>> {
-
+pub async fn get_ip_info(ip: String) -> Result<Value, Box<dyn Error>> {
     let params = [("ip", ip)];
 
     let response = Request::get("https://funkemunky.cc/vpn?").query(params).send().await?;
@@ -35,8 +35,8 @@ pub async fn get_ip_info(ip: String) -> Result<KauriResponse, Box<dyn Error>> {
     let status = response.status();
     info!("Status: {status}");
 
-    let json: KauriResponse = response.json().await?;
+    let json: Value = response.json().await?;
 
-    return Ok(json);
+    Ok(json)
 }
 

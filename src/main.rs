@@ -5,7 +5,11 @@ pub mod pages;
 pub mod utils;
 
 use dioxus::prelude::*;
+use dioxus_router::prelude::*;
 use log::LevelFilter;
+use utils::antivpn::KauriResponse;
+use pages::home::Home;
+use pages::ipresult::IpResult;
 
 
 fn main() {
@@ -13,23 +17,37 @@ fn main() {
     dioxus_web::launch(app);
 }
 
-#[derive(Props, PartialEq)]
-struct ShittyTextProps<'a> {
-    text: &'a str,
-}
-
-#[derive(Props)]
-pub struct FancyButtonProps<'a> {
-    on_click: EventHandler<'a, MouseEvent>,
-}
+pub struct SharedKauriResponse(Option<KauriResponse>);
 
 pub struct DarkMode(bool);
 
+#[derive(Routable, Clone)]
+pub enum Route {
+
+    #[route("/")]
+    Home {},
+    #[route("/ipresult/:ipToCheck")]
+    IpResult {ipToCheck: String},
+    #[end_layout]
+    #[route("/:..route")]
+	NotFound { route: Vec<String> }
+
+
+}
 fn app(cx: Scope) -> Element {
 
     use_shared_state_provider(cx, || components::ipentry::EnteredIp("".to_string()));
     use_shared_state_provider(cx, || DarkMode(true));
+    use_shared_state_provider(cx, || SharedKauriResponse(None));
 
+
+    cx.render(rsx! {
+        Router::<Route> {}
+    })
+}
+
+#[inline_props]
+pub fn Formatted<'a>(cx: Scope<'a>, children: Element<'a>) -> Element {
     let dark_mode = use_shared_state::<DarkMode>(cx).unwrap();
 
     let body_class = if dark_mode.read().0 {
@@ -38,14 +56,16 @@ fn app(cx: Scope) -> Element {
         ""
     };
 
-    cx.render(rsx! {
+    render! {
         Styling {},
         body {
             class: "{body_class}",
             components::navbar::NavBar {},
-            pages::home::Home {}
+            div {
+                children
+            }
         }
-    })
+    }
 }
 
 pub fn Styling(cx: Scope) -> Element {
@@ -60,4 +80,21 @@ pub fn Styling(cx: Scope) -> Element {
             include_str!("./assets/bulma/bulma-extensions.min.js")
         }
     })
+}
+#[inline_props]
+fn NotFound(cx: Scope, route: Vec<String>) -> Element {
+    render! {
+        Formatted {
+            div {
+                class: "container content mt-4 has-text-centered",
+                h1 { "Page not found" }
+                p { "We are terribly sorry, but the page you requested doesn't exist." }
+                p { "You can go back to the " a { href: "/", "home page" } "." },
+                pre {
+                    color: "red",
+                    "log:\nattemped to navigate to: {route:?}"
+                }
+            }
+        }
+    }
 }

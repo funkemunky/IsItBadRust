@@ -15,3 +15,4 @@ serde = { version = "1.0.192", features = ["derive"] }
 serde_json = "1.0.108"
 gloo-net = {version = "0.4.0", features = ["http", "serde_json", "serde"]}
 url = "2.4.1"
+dioxus-router = "0.4.0"

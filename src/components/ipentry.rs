@@ -1,21 +1,20 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_bulma::prelude::*;
-use log::info;
+use dioxus_router::prelude::*;
+use crate::Route;
+use log::{info};
 
 pub struct EnteredIp(pub String);
 
 #[derive(Props)]
 pub struct IpEntryProps<'a>  {
     #[props(default)]
-    on_input: EventHandler<'a, FormEvent>,
-    #[props(default)]
-    on_entered: EventHandler<'a, EnteredIp>
+    on_input: EventHandler<'a, FormEvent>
 }
 
 pub fn IpEntry<'a>(cx: Scope<'a, IpEntryProps<'a>>) -> Element {
-    let current_entering = use_state(cx, || "".to_string());
+    let current_entering = use_shared_state::<EnteredIp>(cx)?;
 
     cx.render(rsx! {
         form {
@@ -23,20 +22,19 @@ pub fn IpEntry<'a>(cx: Scope<'a, IpEntryProps<'a>>) -> Element {
                 class: "input",
                 placeholder: "Enter an IP",
                 oninput: move |event| {
-                    current_entering.set(event.value.clone());
+                    current_entering.write().0 = event.value.clone();
                     cx.props.on_input.call(event);
                 }
             },
-            Button {
-                color: Colors::Primary,
-                "Enter",
-                onclick: |_| {
-                    let current_input = current_entering.get().clone();
+            Link {
+                class: "button is-primary",
+                to: {
+                    let to_check = current_entering.read().0.clone();
 
-                    info!("Setting IP enter to {current_input}");
-                    cx.props.on_entered.call(EnteredIp(current_input.clone()));
-                    info!("Finished!");
-                }
+                    info!("Sending to route {to_check}");
+                    Route::IpResult {ipToCheck: to_check}
+                },
+                "Enter"
             }
         }
     })
