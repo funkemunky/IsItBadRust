@@ -23,7 +23,6 @@ pub struct DarkMode(bool);
 
 #[derive(Routable, Clone)]
 pub enum Route {
-
     #[route("/")]
     Home {},
     #[route("/ipresult/:ipToCheck")]
@@ -31,9 +30,8 @@ pub enum Route {
     #[end_layout]
     #[route("/:..route")]
 	NotFound { route: Vec<String> }
-
-
 }
+
 fn app(cx: Scope) -> Element {
 
     use_shared_state_provider(cx, || components::ipentry::EnteredIp("".to_string()));
